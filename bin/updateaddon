@@ -1,0 +1,11 @@
+#!/bin/bash
+while getopts u:d: option 
+do
+    case "${option}"
+    in
+        d) DATABASE=${OPTARG};;
+        u) ADDON=${OPTARG};;
+    esac
+done
+
+docker-compose exec web odoo shell -d $DATABASE -u $ADDON

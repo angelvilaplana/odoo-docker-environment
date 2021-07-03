@@ -1,0 +1,59 @@
+version: '3'
+services:
+  web:
+    image: odoo:13.0
+    ports:
+      - "8069:8069"
+    environment:
+      - HOST=db
+      - USER=odoo
+      - PASSWORD=odoo
+    depends_on:
+      - db
+    volumes:
+      - odoo:/var/lib/odoo
+      - ./etc:/etc/odoo
+      - ./addons:/mnt/extra-addons
+    networks:
+      - odoo_server
+    tty: true
+    command: -- --dev=reload
+    restart: always
+  db:
+    image: postgres:13
+    restart: always
+    environment:
+      - POSTGRES_USER=odoo
+      - POSTGRES_PASSWORD=odoo
+      - POSTGRES_DB=postgres
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    networks:
+      - odoo_server
+  pgadmin:
+    image: dpage/pgadmin4:5.4
+    environment:
+      - PGADMIN_DEFAULT_EMAIL=postgres@localhost.com
+      - PGADMIN_DEFAULT_PASSWORD=postgres
+    depends_on:
+      - db
+    ports:
+      - "5050:80"
+    volumes:
+      - pgadmin:/var/lib/pgadmin
+    links:
+      - "db:pgsql-server"
+    networks:
+      - odoo_server
+    restart: always
+
+networks:
+  odoo_server:
+    driver: bridge
+
+volumes:
+  odoo:
+  pgdata:
+  pgadmin:

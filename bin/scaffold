@@ -1,0 +1,4 @@
+#!/bin/bash
+MODULE_NAME=$1
+FOLDER='/mnt/extra-addons/'$2
+docker-compose run -u root web /usr/bin/odoo scaffold $MODULE_NAME $FOLDER
