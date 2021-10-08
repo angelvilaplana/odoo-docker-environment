@@ -18,10 +18,8 @@ services:
       - odoo_server
     tty: true
     command: -- --dev=reload
-    restart: always
   db:
     image: postgres:13
-    restart: always
     environment:
       - POSTGRES_USER=odoo
       - POSTGRES_PASSWORD=odoo
@@ -47,7 +45,6 @@ services:
       - "db:pgsql-server"
     networks:
       - odoo_server
-    restart: always
 
 networks:
   odoo_server:
