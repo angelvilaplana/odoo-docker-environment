@@ -1,7 +1,7 @@
 version: '3'
 services:
   web:
-    image: odoo:13.0
+    build: images/odoo
     ports:
       - "8069:8069"
     environment:
@@ -13,6 +13,7 @@ services:
     volumes:
       - odoo:/var/lib/odoo
       - ./etc:/etc/odoo
+      - ./log:/var/log/odoo
       - ./addons:/mnt/extra-addons
     networks:
       - odoo_server

@@ -1,0 +1,6 @@
+#!/bin/bash
+
+docker-compose exec -u root web bash -c 'chown odoo:odoo -R /etc/odoo'
+docker-compose exec -u root web bash -c 'chown odoo:odoo -R /var/lib/odoo'
+docker-compose exec -u root web bash -c 'chown odoo:odoo -R /var/log/odoo'
+docker-compose exec -u root web bash -c 'chown odoo:odoo -R /mnt/extra-addons'
